@@ -1,7 +1,1 @@
-cd H:/Projet-stock-Brasserie    # chemin vers ton projet
-git init                        # initialise un dépôt local
-git add .                       # ajoute tous les fichiers
-git commit -m "Premier commit"  # commit initial
-git branch -M main              # s'assurer que la branche principale s'appelle main
-git remote add origin https://github.com/Roro-culee/projet-brasserie.git
-git push -u origin main          # envoie ton projet sur GitHub
+
