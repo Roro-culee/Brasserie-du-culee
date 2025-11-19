@@ -1,6 +1,7 @@
 // --- Firebase imports ---
 import { db } from "./firebase-config.js";
 import {
+  console.log("Firebase chargé :", db);
   collection,
   addDoc,
   deleteDoc,
@@ -123,3 +124,4 @@ onSnapshot(produitsRef, (snapshot) => {
   const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   afficherProduits(data);
 });
+
