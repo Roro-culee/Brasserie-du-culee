@@ -9,69 +9,73 @@
 <body>
 
   <h1>Gestion des Matières Premières</h1>
-  <h2>Gestion des Matières Premières</h2>
-  <form id="form-matiere">
-    <div>
-      <label for="matiere-nom">Nom matière première :</label>
-      <input type="text" id="matiere-nom" required placeholder="Ex: Malt d'orge" />
-    </div>
-    <div>
-      <label for="matiere-fournisseur">Fournisseur :</label>
-      <input type="text" id="matiere-fournisseur" placeholder="Ex: Brasserie Fournisseur" />
-    </div>
-    <div>
-      <label for="matiere-lot">Numéro de lot :</label>
-      <input type="text" id="matiere-lot" placeholder="Ex: LOT12345" />
-    </div>
-    <div>
-      <label for="matiere-dlc">DLC :</label>
-      <input type="date" id="matiere-dlc" />
-    </div>
-    <div>
-      <label for="matiere-prix">Prix au kg (€) :</label>
-      <input type="number" id="matiere-prix" min="0" step="0.01" placeholder="Ex: 2.50" />
-    </div>
-    <div>
-      <label for="matiere-date-livraison">Date de livraison :</label>
-      <input type="date" id="matiere-date-livraison" />
-    </div>
-    <div>
-      <label for="matiere-quantite">Quantité (kg) :</label>
-      <input type="number" id="matiere-quantite" min="0" step="0.01" required />
-    </div>
 
-    <div style="align-self: flex-end;">
-      <button type="submit">Ajouter / Mettre à jour</button>
-    </div>
-  </form>
+  <section id="matiere-premiere">
 
-  <table id="table-matiere">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Fournisseur</th>
-        <th>Numéro de lot</th>
-        <th>DLC</th>
-        <th>Prix/kg (€)</th>
-        <th>Date de livraison</th>
-        <th>Quantité (kg)</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <script type="module">
-  import { db } from "./firebase-config.js";
-  import "./script-matiere.js";
-</script>
+    <h2>Gestion des Matières Premières</h2>
 
- 
-    
+    <form id="form-matiere">
+      <div>
+        <label for="matiere-nom">Nom matière première :</label>
+        <input type="text" id="matiere-nom" required placeholder="Ex: Malt d'orge" />
+      </div>
+
+      <div>
+        <label for="matiere-fournisseur">Fournisseur :</label>
+        <input type="text" id="matiere-fournisseur" placeholder="Ex: Brasserie Fournisseur" />
+      </div>
+
+      <div>
+        <label for="matiere-lot">Numéro de lot :</label>
+        <input type="text" id="matiere-lot" placeholder="Ex: LOT12345" />
+      </div>
+
+      <div>
+        <label for="matiere-dlc">DLC :</label>
+        <input type="date" id="matiere-dlc" />
+      </div>
+
+      <div>
+        <label for="matiere-prix">Prix au kg (€) :</label>
+        <input type="number" id="matiere-prix" min="0" step="0.01" placeholder="Ex: 2.50" />
+      </div>
+
+      <div>
+        <label for="matiere-date-livraison">Date de livraison :</label>
+        <input type="date" id="matiere-date-livraison" />
+      </div>
+
+      <div>
+        <label for="matiere-quantite">Quantité (kg) :</label>
+        <input type="number" id="matiere-quantite" min="0" step="0.01" required />
+      </div>
+
+      <div style="align-self: flex-end;">
+        <button type="submit">Ajouter / Mettre à jour</button>
+      </div>
+    </form>
+
+    <table id="table-matiere">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Fournisseur</th>
+          <th>Numéro de lot</th>
+          <th>DLC</th>
+          <th>Prix/kg (€)</th>
+          <th>Date de livraison</th>
+          <th>Quantité (kg)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
   </section>
 
-  <script type="module" src="script.js"></script>
-
+  <!-- Seul script autorisé -->
+  <script type="module" src="script-matiere.js"></script>
 
 </body>
 </html>
