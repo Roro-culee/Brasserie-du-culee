@@ -1,13 +1,14 @@
 // --- Firebase imports ---
 import { db } from "./firebase-config.js";
 import {
-  console.log("Firebase chargé :", db);
   collection,
   addDoc,
   deleteDoc,
   doc,
   onSnapshot
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+console.log("Firebase chargé :", db);
 
 // === 🔹 COLLECTIONS FIRESTORE ===
 const matieresRef = collection(db, "matieresPremieres");
@@ -26,7 +27,7 @@ function afficherMatieres(data) {
         <td>${m.fournisseur || ''}</td>
         <td>${m.lot || ''}</td>
         <td>${m.dlc || ''}</td>
-        <td>${m.prix || ''}</td>
+        <td>${m.prix ?? ''}</td>
         <td>${m.dateLivraison || ''}</td>
         <td>${m.quantite}</td>
         <td><button class="delete-btn" data-id="${m.id}" data-type="matiere">Supprimer</button></td>
@@ -46,7 +47,7 @@ function afficherProduits(data) {
         <td>${p.nom}</td>
         <td>${p.type}</td>
         <td>${p.lot || ''}</td>
-        <td>${p.prix || ''}</td>
+        <td>${p.prix ?? ''}</td>
         <td>${p.dateConditionnement || ''}</td>
         <td>${p.dlc || ''}</td>
         <td>${p.quantite}</td>
@@ -65,9 +66,11 @@ if (formMatiere) {
     const fournisseur = document.getElementById("matiere-fournisseur").value.trim();
     const lot = document.getElementById("matiere-lot").value.trim();
     const dlc = document.getElementById("matiere-dlc").value;
-    const prix = parseFloat(document.getElementById("matiere-prix").value) || 0;
+    const prixValue = document.getElementById("matiere-prix").value;
+    const prix = prixValue ? parseFloat(prixValue) : null;
     const dateLivraison = document.getElementById("matiere-date-livraison").value;
-    const quantite = parseFloat(document.getElementById("matiere-quantite").value);
+    const quantiteValue = document.getElementById("matiere-quantite").value;
+    const quantite = parseFloat(quantiteValue);
 
     if (!nom || isNaN(quantite)) return alert("Veuillez entrer des valeurs valides.");
 
@@ -88,10 +91,12 @@ if (formProduit) {
     const nom = document.getElementById("produit-nom").value.trim();
     const type = document.getElementById("produit-type").value;
     const lot = document.getElementById("produit-lot").value;
-    const prix = parseFloat(document.getElementById("produit-prix").value) || 0;
+    const prixValue = document.getElementById("produit-prix").value;
+    const prix = prixValue ? parseFloat(prixValue) : null;
     const dateConditionnement = document.getElementById("produit-date-cond").value;
     const dlc = document.getElementById("produit-dlc").value;
-    const quantite = parseInt(document.getElementById("produit-quantite").value, 10);
+    const quantiteValue = document.getElementById("produit-quantite").value;
+    const quantite = parseInt(quantiteValue, 10);
 
     if (!nom || isNaN(quantite)) return alert("Veuillez entrer des valeurs valides.");
 
@@ -124,4 +129,3 @@ onSnapshot(produitsRef, (snapshot) => {
   const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   afficherProduits(data);
 });
-
