@@ -1,20 +1,11 @@
-// --- Firebase imports ---
 import { db } from "./firebase-config.js";
-import {
-  collection,
-  addDoc,
-  deleteDoc,
-  doc,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 console.log("Firebase chargé :", db);
 
-// === 🔹 COLLECTIONS FIRESTORE ===
 const matieresRef = collection(db, "matieresPremieres");
 const produitsRef = collection(db, "produitsFinis");
 
-// === 🔹 AFFICHAGE MATIÈRES PREMIÈRES ===
 function afficherMatieres(data) {
   const tbody = document.querySelector("#table-matiere tbody");
   if (!tbody) return;
@@ -35,7 +26,6 @@ function afficherMatieres(data) {
   });
 }
 
-// === 🔹 AFFICHAGE PRODUITS FINIS ===
 function afficherProduits(data) {
   const tbody = document.querySelector("#table-produit tbody");
   if (!tbody) return;
@@ -56,59 +46,40 @@ function afficherProduits(data) {
   });
 }
 
-// === 🔹 AJOUT MATIÈRES PREMIÈRES ===
 const formMatiere = document.getElementById("form-matiere");
 if (formMatiere) {
   formMatiere.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const nom = document.getElementById("matiere-nom").value.trim();
     const fournisseur = document.getElementById("matiere-fournisseur").value.trim();
     const lot = document.getElementById("matiere-lot").value.trim();
     const dlc = document.getElementById("matiere-dlc").value;
-    const prixValue = document.getElementById("matiere-prix").value;
-    const prix = prixValue ? parseFloat(prixValue) : null;
+    const prix = document.getElementById("matiere-prix").value ? parseFloat(document.getElementById("matiere-prix").value) : null;
     const dateLivraison = document.getElementById("matiere-date-livraison").value;
-    const quantiteValue = document.getElementById("matiere-quantite").value;
-    const quantite = parseFloat(quantiteValue);
-
+    const quantite = parseFloat(document.getElementById("matiere-quantite").value);
     if (!nom || isNaN(quantite)) return alert("Veuillez entrer des valeurs valides.");
-
-    await addDoc(matieresRef, {
-      nom, fournisseur, lot, dlc, prix, dateLivraison, quantite, createdAt: new Date()
-    });
-
+    await addDoc(matieresRef, { nom, fournisseur, lot, dlc, prix, dateLivraison, quantite, createdAt: new Date() });
     e.target.reset();
   });
 }
 
-// === 🔹 AJOUT PRODUITS FINIS ===
 const formProduit = document.getElementById("form-produit");
 if (formProduit) {
   formProduit.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const nom = document.getElementById("produit-nom").value.trim();
     const type = document.getElementById("produit-type").value;
     const lot = document.getElementById("produit-lot").value;
-    const prixValue = document.getElementById("produit-prix").value;
-    const prix = prixValue ? parseFloat(prixValue) : null;
+    const prix = document.getElementById("produit-prix").value ? parseFloat(document.getElementById("produit-prix").value) : null;
     const dateConditionnement = document.getElementById("produit-date-cond").value;
     const dlc = document.getElementById("produit-dlc").value;
-    const quantiteValue = document.getElementById("produit-quantite").value;
-    const quantite = parseInt(quantiteValue, 10);
-
+    const quantite = parseInt(document.getElementById("produit-quantite").value, 10);
     if (!nom || isNaN(quantite)) return alert("Veuillez entrer des valeurs valides.");
-
-    await addDoc(produitsRef, {
-      nom, type, lot, prix, dateConditionnement, dlc, quantite, createdAt: new Date()
-    });
-
+    await addDoc(produitsRef, { nom, type, lot, prix, dateConditionnement, dlc, quantite, createdAt: new Date() });
     e.target.reset();
   });
 }
 
-// === 🔹 SUPPRESSION ===
 document.body.addEventListener("click", async (e) => {
   if (e.target.classList.contains("delete-btn")) {
     const id = e.target.dataset.id;
@@ -119,13 +90,5 @@ document.body.addEventListener("click", async (e) => {
   }
 });
 
-// === 🔹 SYNCHRO EN TEMPS RÉEL ===
-onSnapshot(matieresRef, (snapshot) => {
-  const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  afficherMatieres(data);
-});
-
-onSnapshot(produitsRef, (snapshot) => {
-  const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  afficherProduits(data);
-});
+onSnapshot(matieresRef, snapshot => afficherMatieres(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))));
+onSnapshot(produitsRef, snapshot => afficherProduits(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))));
